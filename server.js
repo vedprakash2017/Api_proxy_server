@@ -6,7 +6,8 @@ const config = require('./config/config');
 const app = express();
 
 // Initialize a cache for request counts
-const requestCounts = new NodeCache({ stdTTL: config.rateLimitWindowMs / 60 }); // TTL in seconds
+const requestCounts = new NodeCache({ stdTTL: config.rateLimitWindowMs }); // TTL in seconds
+
 
 // Logging middleware
 app.use((req, res, next) => {
@@ -15,7 +16,9 @@ app.use((req, res, next) => {
     
     // Increment request count for this IP
     let count = requestCounts.get(ip) || 0;
-    requestCounts.set(ip, count + 1, config.rateLimitWindowMs / 60); // Reset TTL on each access
+    requestCounts.set(ip, count + 1 ); // Reset TTL on each access
+
+    console.log(`${config.rateLimitWindowMs}`)
 
     // Determine rate limit status based on request count
     const rateLimitStatus = count >= config.rateLimitMaxRequests ? 'Rate limit exceeded' : 'OK';

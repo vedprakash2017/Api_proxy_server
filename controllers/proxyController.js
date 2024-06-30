@@ -4,12 +4,16 @@ const NodeCache = require('node-cache');
 const config = require('../config/config');
 const { createHash } = require('crypto');
 
-const cache = new NodeCache({ stdTTL: config.cacheTTL / 300 });
+const cache = new NodeCache({ stdTTL: config.cacheTTL  });
 
 const getProxyData = async (req, res, next) => {
     try {
+    
         const url = config.urlToProxy;
-        const hashKey = createHash('md5').update(url).digest('hex').slice(0, 7); // Get first 7 characters of the hash
+        const hashh = createHash('md5').update(url).digest('hex'); 
+        const buff = Buffer.from(hashh);
+        const hashKey = buff.toString('base64');
+
         const cachedData = cache.get(hashKey);
 
         if (cachedData) {

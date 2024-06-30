@@ -4,8 +4,8 @@
   "description": "proxy server to public api ",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",    
+    "dev": "nodemon server.js"       
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "node-cache": "^5.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
   }
 }
